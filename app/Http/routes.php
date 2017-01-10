@@ -7,8 +7,13 @@ $api = app('Dingo\Api\Routing\Router');
 
 $api->version('v1', function ($api) {
 
-    $api->get('/', function () {
-        return ['api.laravel.dev'];
+    $api->any('/', function (\Illuminate\Http\Request $request) {
+        header('Access-Control-Allow-Origin: *');
+        return [$request->method() => 'api.laravel.dev'];
+    });
+
+    $api->get('/jsonp', function (\Illuminate\Http\Request $request) {
+        return $request->callback . "(" . json_encode(['get' => 'api.qljiang.com']) . ")";
     });
 
     $api->group(['namespace' => 'App\Api\Controllers'], function ($api) {
