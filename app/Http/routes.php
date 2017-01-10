@@ -12,8 +12,8 @@ $api->version('v1', function ($api) {
         return [$request->method() => 'api.laravel.dev'];
     });
 
-    $api->get('/jsonp', function (\Illuminate\Http\Request $request) {
-        return $request->callback . "(" . json_encode(['get' => 'api.qljiang.com']) . ")";
+    $api->any('/jsonp', function (\Illuminate\Http\Request $request) {
+        return $request->callback . "(" . json_encode([$request->method() => 'api.qljiang.com']) . ")";
     });
 
     $api->group(['namespace' => 'App\Api\Controllers'], function ($api) {
